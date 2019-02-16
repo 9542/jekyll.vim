@@ -131,7 +131,9 @@ function JekyllPost(title)
   if categories != ""
     let categories = input("Post categories: ")
   endif
-  if title != ''
+  if title == ""
+    let title = strftime("%H %M")
+  end
     let file_name = strftime("%Y-%m-%d-") . s:esctitle(title) . "." . g:jekyll_post_suffix
     echo "Making that post " . file_name
     exe "e " . g:jekyll_path . "/_posts/" . file_name
@@ -149,9 +151,6 @@ function JekyllPost(title)
     call extend(template,["---", ""])
 
     let err = append(0, template)
-  else
-    call s:error("You must specify a title")
-  endif
 endfunction
 command! -nargs=? JekyllPost :call JekyllPost(<q-args>)
 
